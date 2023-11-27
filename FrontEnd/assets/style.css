@@ -101,6 +101,7 @@ li:hover {
 #introduction {
 	display: flex;
 	align-items: center;
+	padding: 100px 0px 100px 0px;
 }
 #introduction figure {
 	flex: 1
@@ -125,6 +126,34 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+/* Catégorie pour les boutons */
+.categories{
+	position: relative;
+	display: flex;
+	justify-content: center;
+	gap: 1em;
+	padding: 1em 0em 3em 0em;
+}
+
+/* Boutons categories */
+.categories button {
+	background-color: transparent;
+	border: #1D6154 1px solid;
+	border-radius: 60px;
+	padding: 10px;
+	min-width: 100px;
+	font-weight: 700;
+	font-size: 16px;
+	color: #1D6154;
+	cursor: pointer;
+}
+
+.categories button:hover {
+	background-color:#1D6154;
+	color: #ffffff;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
