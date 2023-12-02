@@ -63,3 +63,21 @@ export function afficherImages(images) {
         conteneurImages.appendChild(figure);
     });
 }
+
+//////////////////////////////////////////////////////////////////////
+
+export function toggleCategories() {
+    console.log('prout');
+    const categoriesContainer = document.querySelector('.categories');
+    if (categoriesContainer) {
+        if (categoriesContainer.style.display === 'none') {
+            categoriesContainer.style.display = 'block';
+        } else {
+            categoriesContainer.style.display = 'none';
+        }
+    }
+}
+
+console.log('gallery.js chargé');
+console.log('login.js chargé');
+
