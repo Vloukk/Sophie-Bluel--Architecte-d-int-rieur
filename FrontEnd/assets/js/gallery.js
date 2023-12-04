@@ -5,7 +5,7 @@ export function traitementCategories(categories) {
     const divPortfolio = document.getElementById('portfolio');
     const divBoutons = document.createElement('div');
     divBoutons.className = 'categories';
-
+   
     const btnAll = document.createElement('button');
     btnAll.textContent = 'Tous';
     divBoutons.appendChild(btnAll);
@@ -34,13 +34,21 @@ export function traitementCategories(categories) {
             image.parentElement.style.display = 'block';
         });
     });
+
+    // Après la création des boutons de catégorie
+    showCategoryButtons();
 }
 
 //Initialise les boutons des catégories
 export function boutonsCategories() {
-    fetchCategories().then(categories => {
-        traitementCategories(categories);
-    });
+    fetchCategories()
+        .then(categories => {
+            traitementCategories(categories);
+            hideCategoryButtons(); // Masquer les boutons initialement
+        })
+        .catch(error => {
+            console.error('Une erreur est survenue :', error);
+        });
 }
 
 //affiche les images dans la galerie à partir des données fournies
@@ -66,18 +74,25 @@ export function afficherImages(images) {
 
 //////////////////////////////////////////////////////////////////////
 
-export function toggleCategories() {
-    console.log('prout');
-    const categoriesContainer = document.querySelector('.categories');
-    if (categoriesContainer) {
-        if (categoriesContainer.style.display === 'none') {
-            categoriesContainer.style.display = 'block';
-        } else {
-            categoriesContainer.style.display = 'none';
-        }
+// Fonction pour masquer les boutons de catégorie
+export function hideCategoryButtons() {
+    const buttons = document.querySelectorAll('.categories button');
+    console.log(buttons); // Vérifier la sélection des boutons
+    if (buttons.length > 0) {
+        buttons.forEach(button => {
+            button.classList.add('hidden');
+        });
     }
 }
 
-console.log('gallery.js chargé');
-console.log('login.js chargé');
+export function showCategoryButtons() {
+    const buttons = document.querySelectorAll('.categories button');
+    console.log(buttons); // Vérifier la sélection des boutons
+    if (buttons.length > 0) {
+        buttons.forEach(button => {
+            button.classList.remove('hidden');
+        });
+    }
+}
+
 

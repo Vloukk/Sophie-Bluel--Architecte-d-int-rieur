@@ -15,15 +15,6 @@ export function fetchCategories() {
       .catch(error => {
           console.error('Erreur lors de la récupération des catégories :', error);
           throw error;
-      });
+    });
 }
 
-//récupère les données login à partir de l'API
-export function fetchLogin() {
-  return fetch('http://localhost:5678/api/users/login')
-      .then(response => response.json())
-      .catch(error => {
-          console.error('Erreur lors de la récupération des catégories :', error);
-          throw error;
-      });
-}

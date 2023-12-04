@@ -3,10 +3,14 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Sophie Bluel - Architecte d'intérieur</title>
+	<link rel="icon" href="/logo.ico" type="image/x-icon">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+		integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+		crossorigin="anonymous" referrerpolicy="no-referrer">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 </head>
@@ -15,14 +19,24 @@
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
-			<a href="#portfolio"><li>projets</li></a>
-			<a href="#contact"><li >Contact</li></a>
-			<a href="/FrontEnd/pages/login.html"><li class="login">Login</li></a>
+			<li><a href="index.html">projets</a></li>
+			<li><a href="index.html">contact</a></li>
+			<li class="active">
+				<a class="login-button" href="./pages/login.html">login</a>
+				<a class="logout-button display-none">logout</a>
+			</li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
 </header>
 <main>
+	<!-- Modal -->
+    <div class="modal-overlay display-none">
+		<div class="modal-content">
+			<i class="close-modal-button fa-solid fa-xmark fa-lg" aria-hidden="true"></i>
+			<h2 class="modal-title">Galerie photo</h2>
+		</div>
+	</div>
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
@@ -35,7 +49,15 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<div class="portfolio-modifier">
+			<h2>Mes Projets</h2>
+			<!-- Modal -->
+			<a class="edit-button">
+				<i class="fa-regular fa-pen-to-square" aria-hidden="true"></i>
+				<span>modifier</span>
+			</a>
+			<!--  -->
+		</div>
 		<div class="gallery">
 			<figure>
 				<img src="assets/images/abajour-tahina.png" alt="Abajour Tahina">
