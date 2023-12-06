@@ -1,4 +1,4 @@
-import { hideCategoryButtons, showCategoryButtons } from './gallery.js';
+import { hideCategoryButtons, showCategoryButtons, boutonsCategories} from './gallery.js';
 
 // Fonctions pour la validation et la gestion de la connexion
 
@@ -169,5 +169,6 @@ export function logoutUser() {
     localStorage.removeItem('token');
     sessionStorage.removeItem('connexionStatus');
     checkLoggedIn(); // Mettre à jour l'état de connexion après la déconnexion
+    boutonsCategories(); 
 }
 

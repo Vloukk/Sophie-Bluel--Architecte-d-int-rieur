@@ -36,14 +36,14 @@ export function traitementCategories(categories) {
     });
 }
 
-//Initialise les boutons des catégories
+// Initialise les boutons des catégories
 export function boutonsCategories() {
     fetchCategories().then(categories => {
         traitementCategories(categories);
     });
 }
 
-//affiche les images dans la galerie à partir des données fournies
+// Affiche les images dans la galerie principale
 export function afficherImages(images) {
     const conteneurImages = document.querySelector('.gallery');
     conteneurImages.innerHTML = "";
@@ -64,12 +64,9 @@ export function afficherImages(images) {
     });
 }
 
-//////////////////////////////////////////////////////////////////////
-
 // Fonction pour masquer les boutons de catégorie
 export function hideCategoryButtons() {
     const buttons = document.querySelectorAll('.categories button');
-    console.log(buttons); // Vérifier la sélection des boutons
     if (buttons.length > 0) {
         buttons.forEach(button => {
             button.classList.add('hidden');
@@ -77,9 +74,9 @@ export function hideCategoryButtons() {
     }
 }
 
+// Fonction pour afficher les boutons de catégorie
 export function showCategoryButtons() {
     const buttons = document.querySelectorAll('.categories button');
-    console.log(buttons); // Vérifier la sélection des boutons
     if (buttons.length > 0) {
         buttons.forEach(button => {
             button.classList.remove('hidden');

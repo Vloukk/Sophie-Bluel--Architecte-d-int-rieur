@@ -329,3 +329,86 @@ form , label {
 .modal-open {
     overflow: hidden;
 }
+
+.close-modal-button {
+	width: 22px;
+	height: 22px;
+	position: absolute;
+	top: 26px;
+	right: 30px;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: black;
+}
+
+.close-modal-button .fa-solid  {
+	color: black;
+	z-index: 100000;
+	font-size: 9px;
+}
+
+.modal-title,
+.modal-upload-title {
+	color: #000;
+	text-align: center;
+	font-family: Work Sans;
+	font-size: 26px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
+}
+
+.modal-content .modal-gallery {
+	margin-top: 46px;
+	margin-bottom: 67px;
+	display: grid;
+	align-items: center;
+	width: 420px;
+	grid-template-columns: repeat(5, 1fr);
+	grid-gap: 6px;
+	grid-row-gap: 26px;
+}
+
+.modal-content .modal-gallery img {
+	max-height: 105px;
+	max-width: 78px;
+}
+
+/* Positionne le bouton delete en haut à gauche de chaque image */
+.image-container {
+    position: relative;
+    display: inline-block; /* Assure que les conteneurs d'images respectent la taille de l'image */
+}
+
+.delete-button {
+    position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 17px;
+	border-radius: 2px;
+    top: 5px; /* Ajustez la valeur pour la position verticale */
+    right: 5px; /* Ajustez la valeur pour la position horizontale */
+    z-index: 1; /* Assure que le bouton est au-dessus de l'image */
+	background-color: #000;
+	border: none;
+}
+
+.delete-button .fa {
+    color: #ffffff;
+	font-size: 9px;
+}
+
+.btn-modal {
+	background-color: transparent;
+	border: #1D6154 1px solid;
+	border-radius: 60px;
+	padding: 10px;
+	min-width: 100px;
+	font-weight: 700;
+	font-size: 16px;
+	color: #1D6154;
+	cursor: pointer;
+}
