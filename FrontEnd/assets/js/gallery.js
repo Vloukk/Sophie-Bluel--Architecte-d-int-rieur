@@ -66,18 +66,23 @@ export function afficherImages(images) {
 
 //////////////////////////////////////////////////////////////////////
 
-export function toggleCategories() {
-    console.log('prout');
-    const categoriesContainer = document.querySelector('.categories');
-    if (categoriesContainer) {
-        if (categoriesContainer.style.display === 'none') {
-            categoriesContainer.style.display = 'block';
-        } else {
-            categoriesContainer.style.display = 'none';
-        }
+// Fonction pour masquer les boutons de catégorie
+export function hideCategoryButtons() {
+    const buttons = document.querySelectorAll('.categories button');
+    console.log(buttons); // Vérifier la sélection des boutons
+    if (buttons.length > 0) {
+        buttons.forEach(button => {
+            button.classList.add('hidden');
+        });
     }
 }
 
-console.log('gallery.js chargé');
-console.log('login.js chargé');
-
+export function showCategoryButtons() {
+    const buttons = document.querySelectorAll('.categories button');
+    console.log(buttons); // Vérifier la sélection des boutons
+    if (buttons.length > 0) {
+        buttons.forEach(button => {
+            button.classList.remove('hidden');
+        });
+    }
+}

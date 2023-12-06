@@ -136,9 +136,25 @@ nav li img {
 #introduction p {
 	margin-bottom: 0.5em;
 }
+/* section pour modifier les projets */
+.portfolio-modifier {
+	position: relative;
+}
+
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
+}
+
+.edit-button {
+	display: flex;
+	gap: 10px;
+	position: absolute;
+	top: 9px;
+	left: calc(50% + 111px);
+	margin-left: 10px;
+	color: black;
+	cursor: pointer;
 }
 
 /* Catégorie pour les boutons */
@@ -166,6 +182,10 @@ nav li img {
 .categories button:hover {
 	background-color:#1D6154;
 	color: #ffffff;
+}
+
+.categories button.hidden {
+    display: none;
 }
 
 .gallery {
@@ -278,4 +298,34 @@ form , label {
 
 .btn-connexion:hover input {
 	background-color:#0E2F28;
+}
+
+
+/****** MODAL ******/
+
+.modal-overlay {
+	position: fixed;
+	display: none;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.30);
+	z-index: 9999;
+}
+
+.modal-content {
+	border-radius: 10px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: 2em auto;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	padding: 60px 105px 45px 105px;
+	text-align: center;
+}
+
+.modal-open {
+    overflow: hidden;
 }
