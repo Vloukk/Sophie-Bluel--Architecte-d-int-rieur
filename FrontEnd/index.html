@@ -36,6 +36,33 @@
 			<h2 class="modal-title">Galerie photo</h2>
 			<div class="modal-gallery"></div>
 			<button class="btn-modal">Ajouter une photo</button>
+			<!-- Ajout photos -->
+			<span class="btn-back"><i class="fas fa-arrow-left"></i></span> <!-- Bouton Retour -->
+			<div id="addImageForm" style="display: none;">
+				<form class="display-none" id="addImgForm" method="post" name="addImgForm">
+					<div class="img-form">
+						<div class="img-upload" id="file">
+							<i class="imgIcon fa-regular fa-image" aria-hidden="true"></i>
+							<img src="" alt="Prévisualisation de l'image"
+								class="preview-img" id="preview">
+							<div class="btn-upload">
+								<input type="file" id="imageUpload" name="img" required>
+								+ Ajouter photo
+							</div>
+							<p class="upload-text">jpg, png : 4mo max</p>
+							<p class="error"></p>
+						</div>
+						<label for="title">Titre</label>
+						<input type="text" name="title" id="title" required>
+						<label for="category">Catégorie</label>
+						<select name="category" id="category" required>
+							<option value="" label=" "></option>
+						</select>
+						<hr>
+						<input class="modal-img-button" type="submit" value="Envoyer">
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
 	<section id="introduction">
