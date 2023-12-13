@@ -1,23 +1,5 @@
 import { hideCategoryButtons, showCategoryButtons, boutonsCategories} from './gallery.js';
 
-// Fonctions pour la validation et la gestion de la connexion
-
-function validateLoginForm(email, password) {
-    // Vérifications de la validité du formulaire de connexion
-    if (email.value.trim() === '') {
-        showValidationError(email, false);
-    } else if (!validateEmail(email.value.trim())) {
-        showValidationError(email, false, 'Format incorrect');
-    } else {
-        hideValidationError(email);
-    }
-
-    if (password.value === '') {
-        showValidationError(password, false);
-    } else {
-        hideValidationError(password);
-    }
-}
 
 async function loginUser(emailInput, passwordInput) {
     checkLoginFormValidity(emailInput, passwordInput);

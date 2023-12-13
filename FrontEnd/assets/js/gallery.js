@@ -47,8 +47,14 @@ export function boutonsCategories() {
 export function afficherImages(images) {
     const conteneurImages = document.querySelector('.gallery');
     conteneurImages.innerHTML = "";
+    
     images.forEach(element => {
         const figure = document.createElement('figure');
+        const imageId = element.imageId; // Assure-toi que l'identifiant de l'image est bien défini dans tes données
+    
+        // Attribue la valeur à data-image-id pour chaque figure créée
+        figure.dataset.imageId = imageId; // Attribue la valeur à data-image-id
+        
         const img = document.createElement('img');
         const figcaption = document.createElement('figcaption');
 
@@ -56,7 +62,11 @@ export function afficherImages(images) {
         img.setAttribute('alt', element.title);
         img.setAttribute('category', element.categoryId);
         img.setAttribute('crossorigin', 'anonymous');
+        // ... (ton code existant)
         figcaption.textContent = element.title;
+        
+        // Ajoute cet attribut data-image-id avec la valeur de l'identifiant de l'image
+        img.dataset.imageId = imageId; // Assigne l'identifiant de l'image à data-image-id
 
         figure.appendChild(img);
         figure.appendChild(figcaption);
@@ -64,10 +74,14 @@ export function afficherImages(images) {
     });
 }
 
+
 // Fonction pour masquer les boutons de catégorie
 export function hideCategoryButtons() {
+    // Sélectionne tous les boutons de catégorie dans la page
     const buttons = document.querySelectorAll('.categories button');
+    // Vérifie s'il y a des boutons trouvés
     if (buttons.length > 0) {
+        // Pour chaque bouton trouvé, ajoute la classe 'hidden' pour les masquer visuellement
         buttons.forEach(button => {
             button.classList.add('hidden');
         });
@@ -79,6 +93,7 @@ export function showCategoryButtons() {
     const buttons = document.querySelectorAll('.categories button');
     if (buttons.length > 0) {
         buttons.forEach(button => {
+            // Pour chaque bouton trouvé, supprime la classe 'hidden' pour les rendre visibles
             button.classList.remove('hidden');
         });
     }

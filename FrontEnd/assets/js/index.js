@@ -2,25 +2,31 @@ import { fetchworks } from './api.js';
 import { boutonsCategories, afficherImages } from './gallery.js';
 import { checkLoggedIn } from './login.js';
 
+// Fonction pour initialiser la galerie d'images
 async function initializeGallery() {
     try {
+        // Récupère les images en attendant la résolution de la promesse retournée par fetchworks()
         const images = await fetchworks();
 
         if (!localStorage.getItem("token")) {
+            // Si aucun jeton n'est trouvé, appelle la fonction boutonsCategories()
             boutonsCategories();
         }
-
+        // Affiche les images récupérées
         afficherImages(images);
     } catch (error) {
         console.error('Une erreur est survenue :', error);
     }
 }
 
+// Appelle la fonction initializeGallery() au chargement de la page
 initializeGallery();
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Vérifie si un utilisateur est connecté
     checkLoggedIn();
 });
+
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -30,62 +36,79 @@ document.addEventListener('DOMContentLoaded', async function() {
     const closeModalButton = document.querySelector('.close-modal-button');
     const modalGallery = document.querySelector('.modal-gallery');
 
+    // Lorsque le bouton d'édition est cliqué
     editButton.addEventListener('click', async function() {
+        // Affiche le modal
         modal.style.display = 'block';
     });
 
+    // Lorsque le bouton de fermeture du modal est cliqué
     closeModalButton.addEventListener('click', function() {
+        // Cache le modal
         modal.style.display = 'none';
-    });
-
-    modalGallery.addEventListener('click', async function(event) {
-        if (event.target && event.target.classList.contains('fa-delete')) {
-            const imageContainer = event.target.parentElement;
-            const imageId = imageContainer.dataset.imageId;
-
-            if (imageContainer && imageId) {
-                try {
-                    const response = await fetch(`http://localhost:5678/api/works/${imageId}`, {
-                        method: 'DELETE'
-                    });
-
-                    if (!response.ok) {
-                        throw new Error('Échec de la suppression de l\'image.');
-                    }
-
-                    imageContainer.remove();
-                } catch (error) {
-                    console.error('Erreur lors de la suppression de l\'image :', error);
-                }
-            }
-        }
     });
 });
 
 ////////////////////////////////////////////////////////////////////////////
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     const gallery1 = document.querySelector('.gallery');
     const gallery2 = document.querySelector('.modal-gallery');
-    const imagesGallery1 = gallery1.querySelectorAll('img');
 
-    imagesGallery1.forEach(img => {
-        const clone = img.cloneNode(true);
-        const imageId = img.dataset.imageId;
+    // Récupérer les données des images depuis l'API
+    const images = await fetchworks();
+
+    images.forEach(image => {
         const container = document.createElement('div');
         container.classList.add('image-container');
-        container.dataset.imageId = imageId;
+        container.dataset.imageId = image.imageId;
+
+        const img = document.createElement('img');
+        img.src = image.imageUrl;
+        img.alt = image.title;
+        img.dataset.imageId = image.imageId; // Assurez-vous que l'attribut data-image-id est défini correctement
+
         const deleteButton = document.createElement('button');
         deleteButton.classList.add('delete-button');
-        deleteButton.dataset.imageId = imageId;
+        deleteButton.dataset.imageId = image.imageId;
+
         const deleteIcon = document.createElement('i');
         deleteIcon.classList.add('fa', 'fa-trash', 'fa-delete');
         deleteButton.appendChild(deleteIcon);
+
         container.appendChild(deleteButton);
-        container.appendChild(clone);
+        container.appendChild(img);
+
         gallery2.appendChild(container);
+
+        deleteButton.addEventListener('click', async function() {
+            const imageIdToDelete = this.dataset.imageId;
+
+            try {
+                const token = localStorage.getItem("token");
+                const apiUrl = `http://localhost:5678/api/works/${imageIdToDelete}`;
+                const response = await fetch(apiUrl, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    container.remove();
+                } else {
+                    console.error('Erreur lors de la suppression de l\'image');
+                }
+            } catch (error) {
+                console.error('Erreur :', error);
+            }
+        });
     });
 });
+
+
+
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -101,29 +124,47 @@ document.addEventListener('DOMContentLoaded', function () {
     let initialTitle = "Galerie photo";
     let isAddingPhotos = false;
 
+    // Lorsque le bouton pour ajouter une photo est cliqué
     addPhotoButton.addEventListener('click', function () {
-        if (!isAddingPhotos) {
-            modalTitle.textContent = "Ajouter des photos";
-            modalGallery.style.display = "none";
-            addPhotoButton.style.display = 'none';
-            btnBack.style.display = 'block';
-            addImageForm.style.display = 'block';
-            modal.style.display = 'block';
-            isAddingPhotos = true;
-        } else {
-            btnBack.style.display = 'block';
-            isAddingPhotos = true;
-        }
-    });
+    // Vérifie si on n'est pas déjà en train d'ajouter des photos
+    if (!isAddingPhotos) {
+        // Change le titre du modal pour indiquer l'ajout de photos
+        modalTitle.textContent = "Ajouter des photos";
+        // Cache la galerie dans le modal
+        modalGallery.style.display = "none";
+        // Cache le bouton d'ajout de photos
+        addPhotoButton.style.display = 'none';
+        // Affiche le bouton de retour
+        btnBack.style.display = 'block';
+        // Affiche le formulaire pour ajouter des images
+        addImageForm.style.display = 'block';
+        // Affiche le modal
+        modal.style.display = 'block';
+        // Marque la situation comme étant en train d'ajouter des photos
+        isAddingPhotos = true;
+    } else {
+        // Si on est déjà en train d'ajouter des photos, affiche le bouton de retour
+        btnBack.style.display = 'block';
+        // Marque toujours la situation comme étant en train d'ajouter des photos
+        isAddingPhotos = true;
+    }
+});
 
-    btnBack.addEventListener('click', function () {
-        modalTitle.textContent = initialTitle;
-        modalGallery.style.display = 'grid';
-        btnBack.style.display = 'none';
-        addPhotoButton.style.display = 'inline-block';
-        addImageForm.style.display = 'none';
-        isAddingPhotos = false;
-    });
+// Lorsque le bouton de retour est cliqué
+btnBack.addEventListener('click', function () {
+    // Rétablit le titre initial du modal
+    modalTitle.textContent = initialTitle;
+    // Affiche à nouveau la galerie dans le modal
+    modalGallery.style.display = 'grid';
+    // Cache le bouton de retour
+    btnBack.style.display = 'none';
+    // Affiche à nouveau le bouton pour ajouter des photos
+    addPhotoButton.style.display = 'inline-block';
+    // Cache le formulaire pour ajouter des images
+    addImageForm.style.display = 'none';
+    // Marque la situation comme n'étant plus en train d'ajouter des photos
+    isAddingPhotos = false;
+});
 
     // Gestion de l'aperçu d'image
     const imageUpload = document.getElementById('imageUpload');
@@ -134,6 +175,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     imageUpload.addEventListener('change', function () {
         const file = imageUpload.files[0];
+
+        // Vérification de la taille du fichier
+        const maxSize = 4 * 1024 * 1024; // 4 Mo
+        if (file && file.size > maxSize) {
+            alert('La taille du fichier dépasse 4 Mo. Veuillez choisir un fichier plus petit.');
+            imageUpload.value = ''; // Réinitialiser le champ de fichier
+            return;
+        }
+
         const reader = new FileReader();
 
         reader.onload = function () {
@@ -159,24 +209,28 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Fonction pour afficher la prévisualisation de l'image
     function showPreview() {
-        previewVisible = true;
+        previewVisible = true; // Définit la visibilité de la prévisualisation comme vraie
         preview.style.display = 'block';
-        hideUploadElements(); // Masquer les autres éléments
+        hideUploadElements(); // Masque les autres éléments associés à l'upload
     }
-
+    
+    // Fonction pour masquer la prévisualisation de l'image
     function hidePreview() {
-        previewVisible = false;
-        preview.style.display = 'none';
-        showUploadElements(); // Réafficher les autres éléments
+        previewVisible = false; // Définit la visibilité de la prévisualisation comme fausse
+        preview.style.display = 'none'; 
+        showUploadElements(); // Réaffiche les éléments associés à l'upload
     }
-
+    
+    // Fonction pour masquer les éléments associés à l'upload
     function hideUploadElements() {
         uploadButton.style.display = 'none';
         uploadText.style.display = 'none';
         imgIcon.style.display = 'none';
     }
-
+    
+    // Fonction pour réafficher les éléments associés à l'upload
     function showUploadElements() {
         uploadButton.style.display = 'block';
         uploadText.style.display = 'block';
@@ -189,13 +243,18 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('DOMContentLoaded', function() {
     const categorySelect = document.getElementById('category');
 
-    function fetchCategories() {
-        return fetch('http://localhost:5678/api/categories')
-            .then(response => response.json())
-            .catch(error => {
-                console.error('Erreur lors de la récupération des catégories :', error);
-                throw error;
-            });
+    async function fetchCategories() {
+        try {
+            const response = await fetch('http://localhost:5678/api/categories');
+            if (!response.ok) {
+                throw new Error('Erreur lors de la récupération des catégories');
+            }
+            const categories = await response.json();
+            return categories;
+        } catch (error) {
+            console.error('Erreur lors de la récupération des catégories :', error);
+            throw error;
+        }
     }
 
     function createCategoryOptions(categories) {
@@ -207,57 +266,48 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    fetchCategories()
-        .then(categories => {
+    async function initializeCategories() {
+        try {
+            const categories = await fetchCategories();
             createCategoryOptions(categories);
-        })
-        .catch(error => {
+            console.log('Catégories récupérées :', categories);
+            console.log('Options de catégorie créées :', categorySelect.childNodes);
+        } catch (error) {
             console.error('Erreur lors de la récupération des catégories :', error);
-        });
-});
+        }
+    }
 
-////////////////////////////////////////////////////////////////////////////
+    initializeCategories();
 
-document.addEventListener('DOMContentLoaded', function() {
-    const addImageForm = document.getElementById('addImgForm');
-    const imageUpload = document.getElementById('imageUpload');
-    const titleInput = document.getElementById('title');
-    const categorySelect = document.getElementById('category');
-    const submitButtonModal = document.querySelector('.modal-img-button');
+    const addImgForm = document.getElementById('addImgForm');
 
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY1MTg3NDkzOSwiZXhwIjoxNjUxOTYxMzM5fQ.JGN1p8YIfR-M-5eQ-Ypy6Ima5cKA4VbfL2xMr2MgHm4';
-
-    addImageForm.addEventListener('submit', function(event) {
+    addImgForm.addEventListener('submit', async function(event) {
         event.preventDefault();
 
-        const formData = new FormData();
-        const file = imageUpload.files[0];
-        const title = titleInput.value;
-        const category = categorySelect.value;
+        const formData = new FormData(this);
+        console.log('Données du formulaire :', formData);
 
-        formData.append('image', file);
-        formData.append('title', title);
-        formData.append('category', category);
+        try {
+            const token = localStorage.getItem("token");
+            const apiUrl = 'http://localhost:5678/api/works';
 
-        fetch('http://localhost:5678/api/works', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                Accept: 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Échec de la requête.');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Réponse du serveur :', data);
-            })
-            .catch(error => {
-                console.error('Erreur lors de l\'envoi des données :', error);
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                body: formData
             });
+
+            if (response.ok) {
+                // Mettre à jour la galerie après l'ajout de l'image
+                initializeGallery();
+            } else {
+                console.error('Erreur lors de l\'ajout de l\'image');
+            }
+        } catch (error) {
+            console.error('Erreur :', error);
+        }
     });
 });
+
