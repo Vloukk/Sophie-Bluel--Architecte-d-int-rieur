@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////// gère l'ouverture et la fermeture de la modale
 
 document.addEventListener('DOMContentLoaded', async function() {
     const modal = document.getElementById('modal');
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     });
 });
 
-////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////// Affiche la galerie dans la modale
 
 document.addEventListener('DOMContentLoaded', async function() {
     const gallery1 = document.querySelector('.gallery');
@@ -97,8 +97,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 
                 if (response.ok) {
                     container.remove();
-                } else {
-                    console.error('Erreur lors de la suppression de l\'image');
                 }
             } catch (error) {
                 console.error('Erreur :', error);
@@ -107,10 +105,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     });
 });
 
-
-
-
-////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////// Affichage du formulaire d'ajout d'images
 
 document.addEventListener('DOMContentLoaded', function () {
     const modal = document.getElementById('modal');
@@ -166,6 +161,8 @@ btnBack.addEventListener('click', function () {
     isAddingPhotos = false;
 });
 
+////////////////////////////////////////////////////////////////////////////  Previsu de l'image ajouté + taille max et formats
+
     // Gestion de l'aperçu d'image
     const imageUpload = document.getElementById('imageUpload');
     const uploadButton = document.querySelector('.btn-upload');
@@ -175,26 +172,34 @@ btnBack.addEventListener('click', function () {
 
     imageUpload.addEventListener('change', function () {
         const file = imageUpload.files[0];
-
-        // Vérification de la taille du fichier
+    
         const maxSize = 4 * 1024 * 1024; // 4 Mo
+        const allowedFormats = ['image/jpeg', 'image/png', 'application/pdf'];
+    
         if (file && file.size > maxSize) {
             alert('La taille du fichier dépasse 4 Mo. Veuillez choisir un fichier plus petit.');
             imageUpload.value = ''; // Réinitialiser le champ de fichier
             return;
         }
-
+    
+        if (file && !allowedFormats.includes(file.type)) {
+            alert('Format de fichier non pris en charge. Veuillez choisir un fichier JPEG, PNG ou PDF.');
+            imageUpload.value = ''; // Réinitialiser le champ de fichier
+            return;
+        }
+    
         const reader = new FileReader();
-
+    
         reader.onload = function () {
             preview.src = reader.result;
             showPreview(); // Afficher l'aperçu après l'ajout de l'image
         }
-
+    
         if (file) {
             reader.readAsDataURL(file);
         }
-    });
+    });    
+
 
     preview.addEventListener('click', function () {
         if (previewVisible) {
@@ -238,7 +243,7 @@ btnBack.addEventListener('click', function () {
     }
 });
 
-////////////////////////////////////////////////////////////////////////////
+ //////////////////////////////////////////////////////////////////////////// Ajout d'image
 
 document.addEventListener('DOMContentLoaded', function() {
     const categorySelect = document.getElementById('category');
@@ -270,8 +275,6 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const categories = await fetchCategories();
             createCategoryOptions(categories);
-            console.log('Catégories récupérées :', categories);
-            console.log('Options de catégorie créées :', categorySelect.childNodes);
         } catch (error) {
             console.error('Erreur lors de la récupération des catégories :', error);
         }
@@ -285,7 +288,6 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
 
         const formData = new FormData(this);
-        console.log('Données du formulaire :', formData);
 
         try {
             const token = localStorage.getItem("token");
@@ -302,8 +304,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (response.ok) {
                 // Mettre à jour la galerie après l'ajout de l'image
                 initializeGallery();
-            } else {
-                console.error('Erreur lors de l\'ajout de l\'image');
             }
         } catch (error) {
             console.error('Erreur :', error);

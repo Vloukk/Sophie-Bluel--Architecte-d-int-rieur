@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Connexion | Sophie Bluel - Architecte d'intérieur</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
@@ -19,16 +20,17 @@
 	<nav>
 		<ul>
 			<a href="../index.html#portfolio"><li>projets</li></a>
-			<a href=""><li >Contact</li></a>
+			<a href="../index.html#contact"><li >Contact</li></a>
 			<li class="active">
-				<a class="login-button" href="./pages/login.html">login</a>
-				<a class="logout-button display-none">logout</a>
+				<a class="login-button" href="#">login</a>
+				<a class="logout-button">logout</a>
 			</li>
 			<li><img src="../assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
 </header>
 <main>
+	<!-- Formulaire connexion -->
 	<section id="connexion">
         <h2>Log in</h2>
         <form action="/login" method="post" id="loginForm">
@@ -40,14 +42,15 @@
               <label for="password">Mot de passe</label>
               <input type="password" id="password" name="password" required autocomplete="current-password">
             </div>
-            <div class="btn btn-connexion">
-				<input type="submit" id="login-submit" value="Se connecter">
+            <div class="btn-connexion">
+				<input type="submit" class="btn submit-login" id="login-submit" value="Se connecter">
             </div>
           </form>
           <a class="forget" href="#">Mot de passe oublié</a>
     </section>
 </main>
-<footer>
+<!-- Footer -->
+<footer class="footer" >
 	<nav>
 		<ul>
 			<li>Mentions Légales</li>

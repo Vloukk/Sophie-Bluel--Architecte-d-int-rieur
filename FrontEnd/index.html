@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Sophie Bluel - Architecte d'intérieur</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
@@ -18,11 +19,11 @@
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
-			<li><a href="index.html">projets</a></li>
-			<li><a href="index.html">contact</a></li>
-			<li class="active">
+			<li><a href="#portfolio">projets</a></li>
+			<li><a href="#contact">contact</a></li>
+			<li>
 				<a class="login-button" href="./pages/login.html">login</a>
-				<a class="logout-button display-none">logout</a>
+				<a class="logout-button">logout</a>
 			</li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
@@ -30,15 +31,16 @@
 </header>
 <main>
 	<!-- Modal -->
-    <div class="modal-overlay display-none" id="modal">
+    <div class="modal-overlay" id="modal">
 		<div class="modal-content">
 			<i class="close-modal-button fa-solid fa-xmark fa-lg" aria-hidden="true"></i>
 			<h2 class="modal-title">Galerie photo</h2>
 			<div class="modal-gallery"></div>
-			<button class="btn-modal">Ajouter une photo</button>
+			<button class="btn btn-modal">Ajouter une photo</button>
 			<!-- Ajout photos -->
 			<span class="btn-back"><i class="fas fa-arrow-left"></i></span> <!-- Bouton Retour -->
 			<div id="addImageForm" style="display: none;">
+				<!-- Formulaire Ajout photos -->
 				<form class="display-none" id="addImgForm" method="post" name="addImgForm">
 					<div class="img-form">
 						<div class="img-upload" id="file">
@@ -55,11 +57,11 @@
 						<label for="title">Titre</label>
 						<input type="text" name="title" id="title" required>
 						<label for="category">Catégorie</label>
-						<select name="category" id="category" required>
+						<select name="category" id="category" required> 
 							<option value="" label=" "></option> 
 						</select>
 						<hr>
-						<input class="modal-img-button" type="submit" value="Valider">
+						<input class="btn modal-img-button" type="submit" value="Valider">
 					</div>
 				</form>
 			</div>
@@ -79,7 +81,7 @@
 	<section id="portfolio">
 		<div class="portfolio-modifier">
 			<h2>Mes Projets</h2>
-			<!-- Modal -->
+			<!-- bouton pour ouvrir Modal -->
 			<a class="edit-button">
 				<i class="fa-regular fa-pen-to-square" aria-hidden="true"></i>
 				<span>modifier</span>
